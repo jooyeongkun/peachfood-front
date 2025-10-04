@@ -1,0 +1,79 @@
+### 회원가입
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "phone": "01012345678",
+  "password": "test1234",
+  "address": "서울시 강남구",
+  "latitude": 37.4979,
+  "longitude": 127.0276
+}
+
+### 로그인
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "phone": "01012345678",
+  "password": "test1234"
+}
+
+### 식당 등록 (로그인 후 토큰 필요)
+POST http://localhost:3000/restaurants
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "name": "맛있는 식당",
+  "category": "한식",
+  "address": "서울시 강남구",
+  "phone": "021234567",
+  "min_order_amount": 15000,
+  "delivery_fee": 3000
+}
+
+### 식당 목록 조회
+GET http://localhost:3000/restaurants
+
+### 메뉴 등록 (로그인 후)
+POST http://localhost:3000/menus
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "restaurant_id": 1,
+  "name": "김치찌개",
+  "price": 8000
+}
+
+### 특정 식당 메뉴 조회
+GET http://localhost:3000/menus?restaurant_id=1
+
+### 주문하기 (로그인 후)
+POST http://localhost:3000/orders
+Content-Type: application/json
+Authorization: Bearer YOUR_TOKEN_HERE
+
+{
+  "restaurant_id": 1,
+  "total_price": 11000,
+  "delivery_address": "서울시 강남구 테헤란로",
+  "delivery_phone": "01012345678",
+  "items": [
+    {
+      "menu_name": "김치찌개",
+      "quantity": 1,
+      "price": 8000
+    },
+    {
+      "menu_name": "공기밥",
+      "quantity": 1,
+      "price": 3000
+    }
+  ]
+}
+
+### 내 주문 내역
+GET http://localhost:3000/orders/my
+Authorization: Bearer YOUR_TOKEN_HERE
